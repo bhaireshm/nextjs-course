@@ -23,10 +23,11 @@ export async function getEventById(id) {
   return all_events.find((event) => event.id === id);
 }
 
-export function getFilteredEvents(dateFilter) {
+export async function getFilteredEvents(dateFilter) {
   const { year, month } = dateFilter;
+  const all_events = await getAllEvents();
 
-  let filteredEvents = DUMMY_EVENTS.filter((event) => {
+  let filteredEvents = all_events.filter((event) => {
     const eventDate = new Date(event.date);
     return eventDate.getFullYear() === year && eventDate.getMonth() === month - 1;
   });

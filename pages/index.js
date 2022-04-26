@@ -9,7 +9,7 @@ function HomePage(props) {
 export async function getStaticProps() {
   const events = await getFeaturedEvents();
   // console.log("home", events);
-  return { props: { events } };
+  return { props: { events }, revalidate: 1800 };
 }
 
 export default HomePage;
