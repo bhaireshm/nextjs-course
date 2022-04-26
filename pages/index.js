@@ -1,15 +1,16 @@
-import EventsList from "../components/events/EventsList";
+import Head from "next/head";
 import ErrorAlert from "../components/error-alert/error-alert";
-import { getFeaturedEvents } from "../helpers/api-util";
+import EventsList from "../components/events/EventsList";
 
 function HomePage(props) {
-  return <div>{props.events ? <EventsList events={props.events} /> : <ErrorAlert>No data found</ErrorAlert>}</div>;
-}
-
-export async function getStaticProps() {
-  const events = await getFeaturedEvents();
-  // console.log("home", events);
-  return { props: { events }, revalidate: 1800 };
+  return (
+    <div>
+      <Head>
+        <title>Featured Events</title>
+      </Head>
+      {featuredEvents ? <EventsList events={featuredEvents} /> : <ErrorAlert>No data found</ErrorAlert>}
+    </div>
+  );
 }
 
 export default HomePage;
