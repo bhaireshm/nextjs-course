@@ -1,4 +1,4 @@
-const apiUrl = "https://nextjs-course-ed07a-default-rtdb.firebaseio.com/events.json";
+export const apiUrl = "https://nextjs-course-ed07a-default-rtdb.firebaseio.com/events.json";
 
 export async function getAllEvents(params = "") {
   return fetch(`${apiUrl}?${params}`)
