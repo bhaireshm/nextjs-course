@@ -1,15 +1,19 @@
 import { useRef } from "react";
+
 import Button from "../ui/button";
-import classes from "./eventsSearch.module.css";
+import classes from "./events-search.module.css";
 
 function EventsSearch(props) {
-  const year = useRef();
-  const month = useRef();
+  const yearInputRef = useRef();
+  const monthInputRef = useRef();
 
-  function submitHandler(e) {
-    e.preventDefault();
-    // console.log(year.current.value, month.current.value);
-    props.onSearch(year.current.value, month.current.value);
+  function submitHandler(event) {
+    event.preventDefault();
+
+    const selectedYear = yearInputRef.current.value;
+    const selectedMonth = monthInputRef.current.value;
+
+    props.onSearch(selectedYear, selectedMonth);
   }
 
   return (
@@ -17,32 +21,30 @@ function EventsSearch(props) {
       <div className={classes.controls}>
         <div className={classes.control}>
           <label htmlFor="year">Year</label>
-          <select id="year" ref={year}>
+          <select id="year" defaultValue={2022} ref={yearInputRef}>
             <option value="2021">2021</option>
             <option value="2022">2022</option>
           </select>
         </div>
         <div className={classes.control}>
           <label htmlFor="month">Month</label>
-          <select id="month" ref={month}>
-            <option value="1">Jan</option>
-            <option value="2">Feb</option>
-            <option value="3">Mar</option>
-            <option value="4">Apr</option>
+          <select id="month" ref={monthInputRef}>
+            <option value="1">January</option>
+            <option value="2">February</option>
+            <option value="3">March</option>
+            <option value="4">April</option>
             <option value="5">May</option>
-            <option value="6">Jun</option>
-            <option value="7">Jul</option>
-            <option value="8">Aug</option>
-            <option value="9">Sep</option>
-            <option value="10">Oct</option>
-            <option value="11">Nov</option>
-            <option value="12">Dec</option>
+            <option value="6">June</option>
+            <option value="7">July</option>
+            <option value="8">August</option>
+            <option value="9">Septemer</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
           </select>
         </div>
       </div>
-      <div>
-        <Button>Find Events</Button>
-      </div>
+      <Button>Find Events</Button>
     </form>
   );
 }

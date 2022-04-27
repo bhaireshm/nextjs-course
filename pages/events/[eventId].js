@@ -1,38 +1,61 @@
 import { Fragment } from "react";
+import Head from "next/head";
+
 import { getEventById, getFeaturedEvents } from "../../helpers/api-util";
 import EventSummary from "../../components/event-detail/event-summary";
 import EventLogistics from "../../components/event-detail/event-logistics";
 import EventContent from "../../components/event-detail/event-content";
-import ErrorAlert from "../../components/error-alert/error-alert";
+import Comments from "../../components/input/comments";
 
-function EventDetailsPage(props) {
+function EventDetailPage(props) {
   const event = props.selectedEvent;
-  if (!event) return <ErrorAlert>Loading...</ErrorAlert>;
+
+  if (!event) {
+    return (
+      <div className="center">
+        <p>Loading...</p>
+      </div>
+    );
+  }
 
   return (
     <Fragment>
-      <EventSummary {...event} />
-      <EventLogistics {...event} imageAlt={event.title} />
+      <Head>
+        <title>{event.title}</title>
+        <meta name="description" content={event.description} />
+      </Head>
+      <EventSummary title={event.title} />
+      <EventLogistics date={event.date} address={event.location} image={event.image} imageAlt={event.title} />
       <EventContent>
         <p>{event.description}</p>
       </EventContent>
+      <Comments eventId={event.id} />
     </Fragment>
   );
 }
 
 export async function getStaticProps(context) {
-  const { params } = context;
-  const event = await getEventById(params.eventId);
-  return { props: { selectedEvent: event } };
-}
+  const eventId = context.params.eventId;
 
-export async function getStaticPaths() {
-  const all_events = await getFeaturedEvents();
+  const event = await getEventById(eventId);
 
   return {
-    paths: all_events.map((event) => ({ params: { eventId: event.id } })),
-    fallback: true, // "blocking"// will not load the content untill it gets the data.
+    props: {
+      selectedEvent: event,
+    },
+    revalidate: 30,
   };
 }
 
-export default EventDetailsPage;
+export async function getStaticPaths() {
+  const events = await getFeaturedEvents();
+
+  const paths = events.map((event) => ({ params: { eventId: event.id } }));
+
+  return {
+    paths: paths,
+    fallback: "blocking",
+  };
+}
+
+export default EventDetailPage;
