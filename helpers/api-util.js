@@ -1,4 +1,5 @@
 export const apiUrl = "https://nextjs-course-ed07a-default-rtdb.firebaseio.com/events.json";
+// export const mongodb = await MongoClient.connect(mongodbUrl).db(db_name);
 
 export async function getAllEvents() {
   const response = await fetch(apiUrl);

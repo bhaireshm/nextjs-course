@@ -29,14 +29,19 @@ function NewComment(props) {
     }
 
     props.onAddComment({
-      email: enteredEmail,
-      name: enteredName,
-      text: enteredComment,
+      payload: { email: enteredEmail, name: enteredName, text: enteredComment },
+      clearForm,
     });
   }
 
+  function clearForm() {
+    emailInputRef.current.value = "";
+    nameInputRef.current.value = "";
+    commentInputRef.current.value = "";
+  }
+
   return (
-    <form className={classes.form}>
+    <form className={classes.form} onSubmit={sendCommentHandler}>
       <div className={classes.row}>
         <div className={classes.control}>
           <label htmlFor="email">Your email</label>
