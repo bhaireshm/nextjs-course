@@ -38,5 +38,9 @@
 }
 
 .form button {
-  background-color: white;
+  background-color: white !important;
+}
+
+.error {
+  color: rgb(236, 26, 26);
 }

@@ -56,7 +56,7 @@ function NewComment(props) {
         <label htmlFor="comment">Your comment</label>
         <textarea id="comment" rows="5" ref={commentInputRef}></textarea>
       </div>
-      {isInvalid && <p>Please enter a valid email address and comment!</p>}
+      {isInvalid && <p className={classes.error}>Please enter a valid email address and comment!</p>}
       <button>Submit</button>
     </form>
   );
